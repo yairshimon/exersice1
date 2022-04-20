@@ -3,6 +3,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Shop shop = new Shop();
+        ShoppingCart shoppingCart = new ShoppingCart();
         int userChoice;
         boolean exitFromSystem = true;
         do {
@@ -22,7 +23,10 @@ public class Main {
                         System.out.print("Hello {" + customer.getFirstName() + "} {" + customer.getLastName());
                         System.out.println(customer.isClubMembers() ? "} {VIP} " : "}");
                         System.out.println(" !");
+                        //ShoppingCart.buyProducts();
+
                     }
+
                     break;
                 case 3:
                     exitFromSystem = false;

@@ -1,13 +1,18 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Shop {
     private LinkedList<Customers> customers;
     private LinkedList<Workers> workers;
+    private HashMap<Integer,Products> productsHashMap;
 
     public Shop() {
         this.customers = new LinkedList<>();
         this.workers = new LinkedList<>();
+        this.productsHashMap = new HashMap<>();
+        Products products = new Products("ss,sd","dddd",12,10);
+        productsHashMap.put(1,products);
     }
 
     public void createUser() {
@@ -80,10 +85,28 @@ public class Shop {
         for (Customers currentCustomer : this.customers) {
             if (currentCustomer.getUserName().equals(username) && currentCustomer.getPassword().equals(password)) {
                 found = currentCustomer;
+                buyProducts(productsHashMap);
                 break;
             }
         }
         return found;
+    }
+    public static void buyProducts(HashMap<Integer,Products> productsHashMap){
+        Scanner scanner = new Scanner(System.in);
+        int amountFromProduct;
+        System.out.println(productsHashMap.toString());
+        System.out.println("Select the product number you are interested in, or enter the number -1 at the end of the purchase");
+        int idProductForBuy = scanner.nextInt();
+        if(idProductForBuy == -1){
+            System.out.println("BY");
+        }else if(productsHashMap.containsKey(idProductForBuy)){
+            do {
+                System.out.println("Enter the amount you want from this product");
+                amountFromProduct = scanner.nextInt();
+            } while (amountFromProduct < 0);
+        }else {
+            System.out.println("NOT EXIST PRODUCT WITH ID THIS");
+        }
     }
 
     public static boolean noNumbers (String string){
