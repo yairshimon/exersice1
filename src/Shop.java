@@ -6,6 +6,8 @@ public class Shop {
     private LinkedList<Customers> customers;
     private LinkedList<Workers> workers;
     private HashMap<Integer,Products> productsHashMap;
+    ShoppingCart shoppingCart = new ShoppingCart();
+
 
     public Shop() {
         this.customers = new LinkedList<>();
@@ -75,38 +77,29 @@ public class Shop {
         return exits;
     }
 
-   public Customers login() {
-        Customers found = null;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your username");
-        String username = scanner.nextLine();
-        System.out.println("Enter your password");
-        String password = scanner.nextLine();
-        for (Customers currentCustomer : this.customers) {
-            if (currentCustomer.getUserName().equals(username) && currentCustomer.getPassword().equals(password)) {
-                found = currentCustomer;
-                buyProducts(productsHashMap);
-                break;
-            }
-        }
-        return found;
-    }
-    public static void buyProducts(HashMap<Integer,Products> productsHashMap){
-        Scanner scanner = new Scanner(System.in);
-        int amountFromProduct;
-        System.out.println(productsHashMap.toString());
-        System.out.println("Select the product number you are interested in, or enter the number -1 at the end of the purchase");
-        int idProductForBuy = scanner.nextInt();
-        if(idProductForBuy == -1){
-            System.out.println("BY");
-        }else if(productsHashMap.containsKey(idProductForBuy)){
-            do {
-                System.out.println("Enter the amount you want from this product");
-                amountFromProduct = scanner.nextInt();
-            } while (amountFromProduct < 0);
-        }else {
-            System.out.println("NOT EXIST PRODUCT WITH ID THIS");
-        }
+   public void loginCustomers() {
+       Customers found = null;
+       Scanner scanner = new Scanner(System.in);
+       System.out.println("Enter your username");
+       String username = scanner.nextLine();
+       System.out.println("Enter your password");
+       String password = scanner.nextLine();
+       for (Customers currentCustomer : this.customers) {
+           if (currentCustomer.getUserName().equals(username) && currentCustomer.getPassword().equals(password)) {
+               found = currentCustomer;
+               System.out.print("Hello {" + currentCustomer.getFirstName() + "} {" + currentCustomer.getLastName());
+               System.out.print(currentCustomer.isClubMembers() ? "} {VIP} " : "}");
+               System.out.println(" !");
+               ShoppingCart.buyProducts(productsHashMap);
+               break;
+           }
+       }
+       if (found == null) {
+           System.out.println("Wrong credentials!");
+       }
+   }
+    public void loginWorkers() {
+
     }
 
     public static boolean noNumbers (String string){

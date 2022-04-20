@@ -3,8 +3,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Shop shop = new Shop();
-        ShoppingCart shoppingCart = new ShoppingCart();
         int userChoice;
+
         boolean exitFromSystem = true;
         do {
             System.out.println("1 - Create a new account\n" +
@@ -16,17 +16,10 @@ public class Main {
                     shop.createUser();
                     break;
                 case 2:
-                    Customers customer = shop.login();
-                    if (customer == null){
-                        System.out.println("Wrong credentials!");
-                    } else {
-                        System.out.print("Hello {" + customer.getFirstName() + "} {" + customer.getLastName());
-                        System.out.println(customer.isClubMembers() ? "} {VIP} " : "}");
-                        System.out.println(" !");
-                        //ShoppingCart.buyProducts();
-
-                    }
-
+                    System.out.println("Do you want to create an employee or customer account? for customer press 0 for employee press 1");
+                    int choice = scanner.nextInt();
+                    if (choice == 0) shop.loginCustomers();
+                    else shop.loginWorkers();
                     break;
                 case 3:
                     exitFromSystem = false;
