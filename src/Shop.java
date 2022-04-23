@@ -13,8 +13,6 @@ public class Shop {
         this.customers = new LinkedList<>();
         this.workers = new LinkedList<>();
         this.productsHashMap = new HashMap<>();
-        Products products = new Products("ss,sd","dddd",12,10);
-        productsHashMap.put(1,products);
     }
 
     public void createUser() {
@@ -50,7 +48,7 @@ public class Shop {
         } while (password.length() < 6);
         if(customers == 0) {
             System.out.println("You are club members?");
-            clubMembers = scanner.hasNext();
+            clubMembers = scanner.nextBoolean();
             Customers newCustomer = new Customers(firstName, lastName, userName, password, clubMembers);
             this.customers.add(newCustomer);
         }else {
@@ -58,7 +56,10 @@ public class Shop {
                 System.out.println("What is your rank, click 1 - for a regular employee; 2 - for a manager; 3 - For a member of the management team.");
                 typeOfWorker = scanner.nextInt();
             } while (typeOfWorker != 1 && typeOfWorker != 2 && typeOfWorker != 3);
-            TypeWorker typeWorker = typeOfWorker == 1 ? TypeWorker.REGULAR_WORKER : TypeWorker.DIRECTOR;
+            TypeWorker typeWorker;
+            if (typeOfWorker==1){ typeWorker = TypeWorker.REGULAR_WORKER;
+            }else if (typeOfWorker==2){ typeWorker = TypeWorker.DIRECTOR;
+            }else typeWorker = TypeWorker.MEMBER_IN_BOARD;
             Workers newWorker = new Workers(firstName, lastName, userName, password, typeWorker);
             this.workers.add(newWorker);
         }
@@ -91,6 +92,7 @@ public class Shop {
                System.out.print(currentCustomer.isClubMembers() ? "} {VIP} " : "}");
                System.out.println(" !");
                ShoppingCart.buyProducts(productsHashMap);
+
                break;
            }
        }
@@ -99,7 +101,84 @@ public class Shop {
        }
    }
     public void loginWorkers() {
+        Scanner scanner = new Scanner(System.in);
+        Workers found = null;
+        System.out.println("Enter your username");
+        String username = scanner.nextLine();
+        System.out.println("Enter your password");
+        String password = scanner.nextLine();
+        for (Workers currentWorker : this.workers) {
+            if (currentWorker.getUserName().equals(username) && currentWorker.getPassword().equals(password)) {
+                found = currentWorker;
+                System.out.print("Hello {" + currentWorker.getFirstName() + "} {" + currentWorker.getLastName() + "}");
+                if (currentWorker.getTypeWorker() == TypeWorker.REGULAR_WORKER){
+                    System.out.print(" {regular worker} ");
+                }else if (currentWorker.getTypeWorker() == TypeWorker.DIRECTOR){
+                    System.out.print(" {director} ");
+                }else System.out.print(" {member in board} ");
+                System.out.println(" !");
+                System.out.println("pressure.\n" +
+                        "1 - Print a list of all customers.\n" +
+                        "2 - Print the list of customers who are members of the club only.\n" +
+                        "3 - Print the list of customers who have made at least one purchase.\n" +
+                        "4 - Print the customer whose purchase amount is the highest.\n" +
+                        "5 - Adding a new product to the store.\n" +
+                        "6 - Change inventory status for a product: Update for a specific product whether it is in stock or not.\n" +
+                        "7 - Making a purchase.\n" +
+                        "8 - Logout: Prints the main menu again.");
+                int choice = scanner.nextInt();
+                switch (choice){
+                    case 1:
+                        System.out.println(customers.toString());
+                        break;
+                    case 2:
+                        for (Customers currentCustomer : this.customers) {
+                            if (currentCustomer.isClubMembers()) {
+                                System.out.println(currentCustomer.toString());
+                            }
+                        }
+                        break;
+                    case 3:
 
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        String name;
+                        String description;
+                        float price;
+                        int discountPercentage;
+                        System.out.println("Enter name of product");
+                        name = scanner.next();
+                        System.out.println("Enter describe product");
+                        description = scanner.next();
+                        System.out.println("Enter price of product");
+                        price = scanner.nextFloat();
+                        System.out.println("Enter a discount for club members");
+                        discountPercentage = scanner.nextInt();
+                        Products newProduct = new Products(name,description,price,discountPercentage);
+                        int i = 0;
+                        do {
+                         i++;
+                        }while (productsHashMap.containsKey(i));
+                        productsHashMap.put(i, newProduct);
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        ShoppingCart.buyProducts(productsHashMap);
+                        break;
+                    case 8:
+                        System.out.println("BY");
+                        break;
+
+                }
+                break;
+            }
+        }
+        if (found == null) {
+            System.out.println("Wrong credentials!");
+        }
     }
 
     public static boolean noNumbers (String string){

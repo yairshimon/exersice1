@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class ShoppingCart {
+
     public static void buyProducts(HashMap<Integer,Products> productsHashMap){
         Scanner scanner = new Scanner(System.in);
         int amountFromProduct;

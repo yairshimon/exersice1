@@ -4,7 +4,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Shop shop = new Shop();
         int userChoice;
-
         boolean exitFromSystem = true;
         do {
             System.out.println("1 - Create a new account\n" +
