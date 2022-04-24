@@ -6,8 +6,6 @@ public class Shop {
     private LinkedList<Customers> customers;
     private LinkedList<Workers> workers;
     private HashMap<Integer,Products> productsHashMap;
-    ShoppingCart shoppingCart = new ShoppingCart();
-
 
     public Shop() {
         this.customers = new LinkedList<>();
@@ -91,7 +89,7 @@ public class Shop {
                System.out.print("Hello {" + currentCustomer.getFirstName() + "} {" + currentCustomer.getLastName());
                System.out.print(currentCustomer.isClubMembers() ? "} {VIP} " : "}");
                System.out.println(" !");
-               ShoppingCart.buyProducts(productsHashMap);
+               ShoppingCart.buyProductsForCustomer(productsHashMap,currentCustomer.isClubMembers());
 
                break;
            }
@@ -102,6 +100,7 @@ public class Shop {
    }
     public void loginWorkers() {
         Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
         Workers found = null;
         System.out.println("Enter your username");
         String username = scanner.nextLine();
@@ -111,70 +110,79 @@ public class Shop {
             if (currentWorker.getUserName().equals(username) && currentWorker.getPassword().equals(password)) {
                 found = currentWorker;
                 System.out.print("Hello {" + currentWorker.getFirstName() + "} {" + currentWorker.getLastName() + "}");
-                if (currentWorker.getTypeWorker() == TypeWorker.REGULAR_WORKER){
+                if (currentWorker.getTypeWorker() == TypeWorker.REGULAR_WORKER) {
                     System.out.print(" {regular worker} ");
-                }else if (currentWorker.getTypeWorker() == TypeWorker.DIRECTOR){
+                } else if (currentWorker.getTypeWorker() == TypeWorker.DIRECTOR) {
                     System.out.print(" {director} ");
-                }else System.out.print(" {member in board} ");
+                } else System.out.print(" {member in board} ");
                 System.out.println(" !");
-                System.out.println("pressure.\n" +
-                        "1 - Print a list of all customers.\n" +
-                        "2 - Print the list of customers who are members of the club only.\n" +
-                        "3 - Print the list of customers who have made at least one purchase.\n" +
-                        "4 - Print the customer whose purchase amount is the highest.\n" +
-                        "5 - Adding a new product to the store.\n" +
-                        "6 - Change inventory status for a product: Update for a specific product whether it is in stock or not.\n" +
-                        "7 - Making a purchase.\n" +
-                        "8 - Logout: Prints the main menu again.");
-                int choice = scanner.nextInt();
-                switch (choice){
-                    case 1:
-                        System.out.println(customers.toString());
-                        break;
-                    case 2:
-                        for (Customers currentCustomer : this.customers) {
-                            if (currentCustomer.isClubMembers()) {
-                                System.out.println(currentCustomer.toString());
+                do {
+                    System.out.println("pressure.\n" +
+                            "1 - Print a list of all customers.\n" +
+                            "2 - Print the list of customers who are members of the club only.\n" +
+                            "3 - Print the list of customers who have made at least one purchase.\n" +
+                            "4 - Print the customer whose purchase amount is the highest.\n" +
+                            "5 - Adding a new product to the store.\n" +
+                            "6 - Change inventory status for a product: Update for a specific product whether it is in stock or not.\n" +
+                            "7 - Making a purchase.\n" +
+                            "8 - Logout: Prints the main menu again.");
+                    int choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1:
+                            System.out.println(customers.toString());
+                            break;
+                        case 2:
+                            for (Customers currentCustomer : this.customers) {
+                                if (currentCustomer.isClubMembers()) {
+                                    System.out.println(currentCustomer.toString());
+                                }
                             }
-                        }
-                        break;
-                    case 3:
+                            break;
+                        case 3:
 
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        String name;
-                        String description;
-                        float price;
-                        int discountPercentage;
-                        System.out.println("Enter name of product");
-                        name = scanner.next();
-                        System.out.println("Enter describe product");
-                        description = scanner.next();
-                        System.out.println("Enter price of product");
-                        price = scanner.nextFloat();
-                        System.out.println("Enter a discount for club members");
-                        discountPercentage = scanner.nextInt();
-                        Products newProduct = new Products(name,description,price,discountPercentage);
-                        int i = 0;
-                        do {
-                         i++;
-                        }while (productsHashMap.containsKey(i));
-                        productsHashMap.put(i, newProduct);
-                        break;
-                    case 6:
-                        break;
-                    case 7:
-                        ShoppingCart.buyProducts(productsHashMap);
-                        break;
-                    case 8:
-                        System.out.println("BY");
-                        break;
+                            break;
+                        case 4:
 
-                }
-                break;
-            }
+                            break;
+                        case 5:
+                            String name;
+                            String description;
+                            float price;
+                            int discountPercentage;
+                            System.out.println("Enter name of product");
+                            name = scanner.next();
+                            System.out.println("Enter describe product");
+                            description = scanner.next();
+                            System.out.println("Enter price of product");
+                            price = scanner.nextFloat();
+                            System.out.println("Enter a discount for club members");
+                            discountPercentage = scanner.nextInt();
+                            Products newProduct = new Products(name, description, price, discountPercentage);
+                            int i = 0;
+                            do {
+                                i++;
+                            } while (productsHashMap.containsKey(i));
+                            productsHashMap.put(i, newProduct);
+                            break;
+                        case 6:
+                            System.out.println(productsHashMap.toString());
+                            System.out.println("Enter number product you want to delete from list");
+                            int productDelete = scanner.nextInt();
+                            productsHashMap.remove(productDelete);
+                            System.out.println(productsHashMap.toString());
+                            break;
+                        case 7:
+                            ShoppingCart.buyProductsForWorker(productsHashMap, currentWorker.getTypeWorker());
+                            break;
+                        case 8:
+                            exit = true;
+                            System.out.println("BY");
+                            break;
+                    } } while (!exit) ;
+                    break;
+
+
+        }
         }
         if (found == null) {
             System.out.println("Wrong credentials!");
