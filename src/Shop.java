@@ -19,7 +19,8 @@ public class Shop {
         String lastName;
         String userName;
         String password;
-        boolean clubMembers;
+        int youClubMembers;
+        boolean clubMembers = false;
         boolean userNameTaken;
         int customers ;
         int typeOfWorker;
@@ -45,8 +46,11 @@ public class Shop {
             password = scanner.next();
         } while (password.length() < 6);
         if(customers == 0) {
-            System.out.println("You are club members?(enter 'true' or 'false')");
-            clubMembers = scanner.hasNext();
+            do{
+            System.out.println("You are club members?(enter 1 for 'true' or 0 for 'false')");
+            youClubMembers = scanner.nextInt();
+        }while (youClubMembers != 0 && youClubMembers != 1);
+            if(youClubMembers > 0) clubMembers = true;
             Customers newCustomer = new Customers(firstName, lastName, userName, password, clubMembers);
             this.customers.add(newCustomer);
         }else {
