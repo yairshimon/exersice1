@@ -3,9 +3,9 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Shop {
-    private LinkedList<Customers> customers;
-    private LinkedList<Workers> workers;
-    private HashMap<Integer,Products> productsHashMap;
+    private final LinkedList<Customers> customers;
+    private final LinkedList<Workers> workers;
+    private final HashMap<Integer,Products> productsHashMap;
 
     public Shop() {
         this.customers = new LinkedList<>();
@@ -19,7 +19,7 @@ public class Shop {
         String lastName;
         String userName;
         String password;
-        Boolean clubMembers;
+        boolean clubMembers;
         boolean userNameTaken;
         int customers ;
         int typeOfWorker;
@@ -45,8 +45,8 @@ public class Shop {
             password = scanner.next();
         } while (password.length() < 6);
         if(customers == 0) {
-            System.out.println("You are club members?");
-            clubMembers = scanner.nextBoolean();
+            System.out.println("You are club members?(enter 'true' or 'false')");
+            clubMembers = scanner.hasNext();
             Customers newCustomer = new Customers(firstName, lastName, userName, password, clubMembers);
             this.customers.add(newCustomer);
         }else {
@@ -70,7 +70,17 @@ public class Shop {
         for (Customers currentCustomer : this.customers) {
             if (currentCustomer.getUserName().equals(usernameToCheck)) {
                 exits = true;
+                System.out.println("Username is busy");
                 break;
+            }
+        }
+        if (!exits) {
+            for (Workers currentWorker : this.workers) {
+                if (currentWorker.getUserName().equals(usernameToCheck)) {
+                    exits = true;
+                    System.out.println("Username is busy");
+                    break;
+                }
             }
         }
         return exits;
@@ -138,31 +148,26 @@ public class Shop {
                             }
                             break;
                         case 3:
-                            if (!customers.isEmpty()) {
+                            boolean inStorePurchase = false;
                                 for (Customers currentCustomer : this.customers) {
                                     if (currentCustomer.getAmountOfPurchases() >= 1) {
                                         System.out.println(currentCustomer.toString());
+                                        inStorePurchase = true;
                                     }
                                 }
-                            }else {
-                                System.out.println("No shopping was done at the delicate store");
-                            }
-                            break;
+                           if(!inStorePurchase) System.out.println("No shopping was done at the delicate store");
+                           break;
                         case 4:
-                            if (!customers.isEmpty()) {
-                                Customers customerPurchaseAmountHighest = null;
-                                for (Customers currentCustomer : this.customers) {
-                                    for (Customers currentCustomer1 : this.customers) {
-                                        if (currentCustomer.getSumOfPurchases() > currentCustomer1.getSumOfPurchases()) {
-                                            customerPurchaseAmountHighest = currentCustomer;
-                                        }
+                            boolean InStorePurchase = false;
+                            Customers customerPurchaseAmountHighest = customers.get(0);
+                            for (Customers currentCustomer : this.customers) {
+                                    if (currentCustomer.getSumOfPurchases() > customerPurchaseAmountHighest.getSumOfPurchases()) {
+                                        customerPurchaseAmountHighest = currentCustomer;
+                                        InStorePurchase = true;
                                     }
                                 }
-
-                                System.out.println(customerPurchaseAmountHighest.toString());
-                            }else{
-                                System.out.println("No shopping was done at the delicate store");
-                            }
+                            if (InStorePurchase) System.out.println(customerPurchaseAmountHighest.toString());
+                            else System.out.println("No shopping was done at the delicate store");
                             break;
                         case 5:
                             String name;
