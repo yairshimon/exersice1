@@ -4,6 +4,8 @@ public class Customers {
     private String userName;
     private String password;
     private boolean clubMembers;
+    private double sumOfPurchases;
+    private int amountOfPurchases;
 
     @Override
     public String toString() {
@@ -13,14 +15,9 @@ public class Customers {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", clubMembers=" + clubMembers +
+                ", sumOfPurchases=" + sumOfPurchases +
+                ", amountOfPurchases=" + amountOfPurchases +
                 '}';
-    }
-    public boolean equals (Customers other) {
-        boolean equals = false;
-        if (this.userName.equals(other.userName)) {
-            equals = true;
-        }
-        return equals;
     }
 
     public Customers(String firstName, String lastName, String userName, String password, boolean clubMembers) {
@@ -29,7 +26,37 @@ public class Customers {
         this.userName = userName;
         this.password = password;
         this.clubMembers = clubMembers;
+        this.sumOfPurchases = 0;
+        this.amountOfPurchases = 0;
     }
+
+    public double getSumOfPurchases() {
+        return sumOfPurchases;
+    }
+
+    public void setSumOfPurchases(double sumOfPurchases) {
+        this.sumOfPurchases += sumOfPurchases;
+    }
+
+    public int getAmountOfPurchases() {
+        return amountOfPurchases;
+    }
+
+    public void setAmountOfPurchases() {
+        this.amountOfPurchases ++;
+    }
+
+
+
+    public boolean equals (Customers other) {
+        boolean equals = false;
+        if (this.userName.equals(other.userName)) {
+            equals = true;
+        }
+        return equals;
+    }
+
+
 
     public String getFirstName() {
         return firstName;

@@ -19,7 +19,7 @@ public class Shop {
         String lastName;
         String userName;
         String password;
-        boolean clubMembers;
+        Boolean clubMembers;
         boolean userNameTaken;
         int customers ;
         int typeOfWorker;
@@ -89,8 +89,7 @@ public class Shop {
                System.out.print("Hello {" + currentCustomer.getFirstName() + "} {" + currentCustomer.getLastName());
                System.out.print(currentCustomer.isClubMembers() ? "} {VIP} " : "}");
                System.out.println(" !");
-               ShoppingCart.buyProductsForCustomer(productsHashMap,currentCustomer.isClubMembers());
-
+               ShoppingCart.buyProductsForCustomer(productsHashMap,currentCustomer);
                break;
            }
        }
@@ -139,10 +138,31 @@ public class Shop {
                             }
                             break;
                         case 3:
-
+                            if (!customers.isEmpty()) {
+                                for (Customers currentCustomer : this.customers) {
+                                    if (currentCustomer.getAmountOfPurchases() >= 1) {
+                                        System.out.println(currentCustomer.toString());
+                                    }
+                                }
+                            }else {
+                                System.out.println("No shopping was done at the delicate store");
+                            }
                             break;
                         case 4:
+                            if (!customers.isEmpty()) {
+                                Customers customerPurchaseAmountHighest = null;
+                                for (Customers currentCustomer : this.customers) {
+                                    for (Customers currentCustomer1 : this.customers) {
+                                        if (currentCustomer.getSumOfPurchases() > currentCustomer1.getSumOfPurchases()) {
+                                            customerPurchaseAmountHighest = currentCustomer;
+                                        }
+                                    }
+                                }
 
+                                System.out.println(customerPurchaseAmountHighest.toString());
+                            }else{
+                                System.out.println("No shopping was done at the delicate store");
+                            }
                             break;
                         case 5:
                             String name;

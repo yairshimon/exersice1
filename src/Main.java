@@ -15,8 +15,11 @@ public class Main {
                     shop.createUser();
                     break;
                 case 2:
-                    System.out.println("Do you want to create an employee or customer account? for customer press 0 for employee press 1");
-                    int choice = scanner.nextInt();
+                    int choice;
+                    do{
+                        System.out.println("Do you want to create an employee or customer account? for customer press 0 for employee press 1");
+                        choice = scanner.nextInt();
+                    }while(choice != 0 && choice != 1);
                     if (choice == 0) shop.loginCustomers();
                     else shop.loginWorkers();
                     break;
