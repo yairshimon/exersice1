@@ -103,7 +103,8 @@ public class Shop {
                System.out.print("Hello {" + currentCustomer.getFirstName() + "} {" + currentCustomer.getLastName());
                System.out.print(currentCustomer.isClubMembers() ? "} {VIP} " : "}");
                System.out.println(" !");
-               ShoppingCart.buyProductsForCustomer(productsHashMap,currentCustomer);
+               if(productsHashMap.isEmpty()) System.out.println("No products in the store yet,Come back later");
+               else ShoppingCart.buyProductsForCustomer(productsHashMap,currentCustomer);
                break;
            }
        }
@@ -142,14 +143,18 @@ public class Shop {
                     int choice = scanner.nextInt();
                     switch (choice) {
                         case 1:
-                            System.out.println(customers.toString());
+                            if(customers.isEmpty()) System.out.println("NO CUSTOMERS IN SHOP");
+                            else System.out.println(customers.toString());
                             break;
                         case 2:
+                            boolean exitsCustomersVIP = false;
                             for (Customers currentCustomer : this.customers) {
                                 if (currentCustomer.isClubMembers()) {
                                     System.out.println(currentCustomer.toString());
+                                    exitsCustomersVIP = true;
                                 }
                             }
+                            if(!exitsCustomersVIP) System.out.println("NO CUSTOMERS VIP IN SHOP");
                             break;
                         case 3:
                             boolean inStorePurchase = false;
@@ -162,16 +167,18 @@ public class Shop {
                            if(!inStorePurchase) System.out.println("No shopping was done at the delicate store");
                            break;
                         case 4:
-                            boolean InStorePurchase = false;
-                            Customers customerPurchaseAmountHighest = customers.get(0);
-                            for (Customers currentCustomer : this.customers) {
+                            if(!customers.isEmpty()) {
+                                boolean InStorePurchase = false;
+                                Customers customerPurchaseAmountHighest = customers.get(0);
+                                for (Customers currentCustomer : this.customers) {
                                     if (currentCustomer.getSumOfPurchases() > customerPurchaseAmountHighest.getSumOfPurchases()) {
                                         customerPurchaseAmountHighest = currentCustomer;
                                         InStorePurchase = true;
                                     }
                                 }
-                            if (InStorePurchase) System.out.println(customerPurchaseAmountHighest.toString());
-                            else System.out.println("No shopping was done at the delicate store");
+                                if (InStorePurchase) System.out.println(customerPurchaseAmountHighest.toString());
+                                else System.out.println("No shopping was done at the delicate store");
+                            }else System.out.println("NO CUSTOMERS IN SHOP");
                             break;
                         case 5:
                             String name;
@@ -194,11 +201,16 @@ public class Shop {
                             productsHashMap.put(i, newProduct);
                             break;
                         case 6:
-                            System.out.println(productsHashMap.toString());
-                            System.out.println("Enter number product you want to delete from list");
-                            int productDelete = scanner.nextInt();
-                            productsHashMap.remove(productDelete);
-                            System.out.println(productsHashMap.toString());
+                            int productDelete;
+                            if(productsHashMap.isEmpty()) System.out.println("No products in the store yet,Come back later");
+                            else {
+                                System.out.println(productsHashMap.toString());
+                                do {
+                                    System.out.println("Enter number product you want to delete from list(for exit press -1)");
+                                    productDelete = scanner.nextInt();
+                                } while (productsHashMap.get(productDelete) == null && productDelete != -1);
+                                productsHashMap.remove(productDelete);
+                            }
                             break;
                         case 7:
                             ShoppingCart.buyProductsForWorker(productsHashMap, currentWorker.getTypeWorker());

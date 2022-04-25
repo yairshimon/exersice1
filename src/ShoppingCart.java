@@ -33,6 +33,7 @@ public class ShoppingCart {
             buyProductsForCustomer(productsHashMap,customers);
         }else {
             System.out.println("NOT EXIST PRODUCT WITH ID THIS");
+            buyProductsForCustomer(productsHashMap,customers);
         }
     }
     public static void buyProductsForWorker(HashMap<Integer,Products> productsHashMap,TypeWorker typeWorker){
@@ -58,6 +59,7 @@ public class ShoppingCart {
             buyProductsForWorker(productsHashMap,typeWorker);
         }else {
             System.out.println("NOT EXIST PRODUCT WITH ID THIS");
+            buyProductsForWorker(productsHashMap,typeWorker);
         }
     }
 }
