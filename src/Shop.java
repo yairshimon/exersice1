@@ -30,11 +30,11 @@ public class Shop {
         do {
             System.out.println("Enter a first name");
             firstName = scanner.next();
-        } while (!noNumbers(firstName));
+        } while (noNumbers(firstName));
         do {
             System.out.println("Enter a last name");
             lastName = scanner.next();
-        } while (!noNumbers(lastName));
+        } while (noNumbers(lastName));
         do {
             System.out.println("Enter a user name");
             userName = scanner.next();
@@ -216,8 +216,11 @@ public class Shop {
 
     public static boolean noNumbers (String string){
         for (int i = 0; i < string.length(); i++){
-            if (string.charAt(i) >= 48 &&  string.charAt(i) <= 57) return false;
+            if (string.charAt(i) >= 48 &&  string.charAt(i) <= 57) {
+                System.out.println("Enter name without numbers!!!");
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 }
