@@ -10,7 +10,10 @@ public class ShoppingCart {
         double price = 0;
         int amountFromProduct;
         boolean exit = true;
+        String date;
         do {
+            System.out.println("Enter date");
+            date = scanner.next();
             System.out.println("Cart shopping is:");
             System.out.println(productsHashMap.toString());
             System.out.println("Select the product number you are interested in, or enter the number -1 at the end of the purchase");
@@ -34,7 +37,7 @@ public class ShoppingCart {
                 else price = price + priceProduct;
                 System.out.println("The price of your cart are:" + price);
                 customers.setAmountOfPurchases();
-                customers.setSumOfPurchases(price);
+                customers.setLastPurchaseDate(date);
             } else {
                 System.out.println("NOT EXIST PRODUCT WITH ID THIS");
             }

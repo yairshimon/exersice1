@@ -106,7 +106,7 @@ public class Shop {
                System.out.print(currentCustomer.isClubMembers() ? "} {VIP} " : "}");
                System.out.println(" !");
                if(productsHashMap.isEmpty()) System.out.println("No products in the store yet,Come back later");
-               else ShoppingCart.buyProductsForUser(productsHashMap,currentCustomer);
+               else currentCustomer.setSumOfPurchases(ShoppingCart.buyProductsForUser(productsHashMap,currentCustomer));
                break;
            }
        }
@@ -225,7 +225,7 @@ public class Shop {
                             else if (currentWorker.getTypeWorker() == TypeWorker.DIRECTOR) priceCartShop *= 0.80;
                             else priceCartShop *= 0.70;
                             System.out.println("The final price of your cart are:" + priceCartShop );
-                            currentWorker.setAmountOfPurchases();
+                            currentWorker.setSumOfPurchases(priceCartShop);
                             break;
                         case 8:
                             exit = true;

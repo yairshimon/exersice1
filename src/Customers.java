@@ -6,6 +6,8 @@ public class Customers {
     private boolean clubMembers;
     private double sumOfPurchases;
     private int amountOfPurchases;
+    private String lastPurchaseDate;
+
 
     @Override
     public String toString() {
@@ -17,6 +19,7 @@ public class Customers {
                 ", clubMembers=" + clubMembers +
                 ", sumOfPurchases=" + sumOfPurchases +
                 ", amountOfPurchases=" + amountOfPurchases +
+                ", lastPurchaseDate='" + lastPurchaseDate + '\'' +
                 '}';
     }
 
@@ -28,6 +31,15 @@ public class Customers {
         this.clubMembers = clubMembers;
         this.sumOfPurchases = 0;
         this.amountOfPurchases = 0;
+        this.lastPurchaseDate = "00.00.00";
+    }
+
+    public String getLastPurchaseDate() {
+        return lastPurchaseDate;
+    }
+
+    public void setLastPurchaseDate(String lastPurchaseDate) {
+        this.lastPurchaseDate = lastPurchaseDate;
     }
 
     public String getFirstName() {
