@@ -4,14 +4,7 @@ public class Products {
     private float price;
     private int discountPercentage;
     private int amountProduct;
-
-    public Products(String name, String description, float price, int discountPercentage, int amountProduct) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.discountPercentage = discountPercentage;
-        this.amountProduct = amountProduct;
-    }
+    private boolean availableInStock;
 
     @Override
     public String toString() {
@@ -21,7 +14,25 @@ public class Products {
                 ", price=" + price +
                 ", discountPercentage=" + discountPercentage +
                 ", amountProduct=" + amountProduct +
+                ", availableInStock='" + availableInStock + '\'' +
                 '}';
+    }
+
+    public Products(String name, String description, float price, int discountPercentage, int amountProduct, boolean availableInStock) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.discountPercentage = discountPercentage;
+        this.amountProduct = amountProduct;
+        this.availableInStock = availableInStock;
+    }
+
+    public boolean isAvailableInStock() {
+        return availableInStock;
+    }
+
+    public void setAvailableInStock() {
+        this.availableInStock = !this.availableInStock;
     }
 
     public int getAmountProduct() {

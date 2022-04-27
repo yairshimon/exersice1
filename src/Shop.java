@@ -45,7 +45,7 @@ public class Shop {
             System.out.println("Enter a password");
             password = scanner.next();
         } while (password.length() < 6);
-        do {
+        do {//avoid for error
             System.out.println("You are club members?(enter 1 for 'true' or 0 for 'false')");
             youClubMembers = scanner.nextInt();
         } while (youClubMembers != 0 && youClubMembers != 1);
@@ -188,6 +188,8 @@ public class Shop {
                             float price;
                             int discountPercentage;
                             int amountProduct;
+                            boolean availableInStock = false;
+                            int availableStock;
                             System.out.println("Enter name of product");
                             name = scanner.next();
                             System.out.println("Enter describe product");
@@ -200,7 +202,12 @@ public class Shop {
                                 System.out.println("Enter a amount of product");
                                 amountProduct = scanner.nextInt();
                             }while (amountProduct<0);
-                            Products newProduct = new Products(name, description, price, discountPercentage,amountProduct);
+                            do {//avoid for error
+                                System.out.println("Is the product in stock?(enter 1 for 'true' or 0 for 'false')");
+                                availableStock = scanner.nextInt();
+                            } while (availableStock != 0 && availableStock != 1);
+                            if (availableStock == 1) availableInStock = true;
+                            Products newProduct = new Products(name, description, price, discountPercentage,amountProduct,availableInStock);
                             int i = 0;
                             do {
                                 i++;
@@ -213,10 +220,10 @@ public class Shop {
                             else {
                                 System.out.println(productsHashMap.toString());
                                 do {
-                                    System.out.println("Enter number product you want to delete from list(for exit press -1)");
+                                    System.out.println("Enter a product number that you would like to change its availability in stock(for exit press -1)");
                                     productDelete = scanner.nextInt();
                                 } while (productsHashMap.get(productDelete) == null && productDelete != -1);
-                                productsHashMap.remove(productDelete);
+                                productsHashMap.get(productDelete).setAvailableInStock();
                             }
                             break;
                         case 7:
