@@ -36,7 +36,7 @@ public class ShoppingCart {
             buyProductsForCustomer(productsHashMap,customers);
         }
     }
-    public static void buyProductsForWorker(HashMap<Integer,Products> productsHashMap,TypeWorker typeWorker){
+    public static void buyProductsForWorker(HashMap<Integer,Products> productsHashMap,Workers worker){
         Scanner scanner = new Scanner(System.in);
         int amountFromProduct;
         System.out.println("Cart shopping is:");
@@ -50,16 +50,19 @@ public class ShoppingCart {
                 System.out.println("Enter the amount you want from this product");
                 amountFromProduct = scanner.nextInt();
             } while (amountFromProduct < 0);
+            double price = productsHashMap.get(idProductForBuy).getPrice() * amountFromProduct;
+            double discountClubMember =0.01 * (100 - productsHashMap.get(idProductForBuy).getDiscountPercentage()) ;
+            if(worker.isClubMembers()) price *= discountClubMember;
             System.out.println("The contents of your cart are:");
             System.out.println(productsHashMap.get(idProductForBuy).getName() + " amount is = " + amountFromProduct);
-            double discount =0.01 * (100 - productsHashMap.get(idProductForBuy).getDiscountPercentage()) ;
-            if(typeWorker == TypeWorker.REGULAR_WORKER) System.out.println("The price of your cart are:" + productsHashMap.get(idProductForBuy).getPrice() * amountFromProduct * discount * 0.90 );
-            else if (typeWorker == TypeWorker.DIRECTOR) System.out.println("The price of your cart are:" + productsHashMap.get(idProductForBuy) .getPrice() * amountFromProduct * discount * 0.80);
-            else System.out.println("The price of your cart are:" + productsHashMap.get(idProductForBuy) .getPrice() * amountFromProduct * discount * 0.70);
-            buyProductsForWorker(productsHashMap,typeWorker);
+            if(worker.getTypeWorker() == TypeWorker.REGULAR_WORKER) System.out.println("The price of your cart are:" + price *  0.90 );
+            else if (worker.getTypeWorker() == TypeWorker.DIRECTOR) System.out.println("The price of your cart are:" + price  * 0.80);
+            else System.out.println("The price of your cart are:" + price * 0.70);
+            worker.setAmountOfPurchases();
+            buyProductsForWorker(productsHashMap,worker) ;
         }else {
             System.out.println("NOT EXIST PRODUCT WITH ID THIS");
-            buyProductsForWorker(productsHashMap,typeWorker);
+            buyProductsForWorker(productsHashMap,worker);
         }
     }
 }

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Shop {
     private final LinkedList<Customers> customers;
     private final LinkedList<Workers> workers;
-    private final HashMap<Integer,Products> productsHashMap;
+    private final HashMap<Integer, Products> productsHashMap;
 
     public Shop() {
         this.customers = new LinkedList<>();
@@ -22,11 +22,11 @@ public class Shop {
         int youClubMembers;
         boolean clubMembers = false;
         boolean userNameTaken;
-        int customers ;
+        int customers;
         int typeOfWorker;
         do {
-        System.out.println("Do you want to create an employee or customer account? for customer press 0 for employee press 1");
-        customers = scanner.nextInt();
+            System.out.println("Do you want to create an employee or customer account? for customer press 0 for employee press 1");
+            customers = scanner.nextInt();
         } while (customers != 0 && customers != 1);
         do {
             System.out.println("Enter a first name");
@@ -45,26 +45,28 @@ public class Shop {
             System.out.println("Enter a password");
             password = scanner.next();
         } while (password.length() < 6);
-        if(customers == 0) {
-            do{
+        do {
             System.out.println("You are club members?(enter 1 for 'true' or 0 for 'false')");
             youClubMembers = scanner.nextInt();
-        }while (youClubMembers != 0 && youClubMembers != 1);
-            if(youClubMembers > 0) clubMembers = true;
+        } while (youClubMembers != 0 && youClubMembers != 1);
+        if (youClubMembers > 0) clubMembers = true;
+        if(customers == 0 ) {
             Customers newCustomer = new Customers(firstName, lastName, userName, password, clubMembers);
             this.customers.add(newCustomer);
-        }else {
-            do {
-                System.out.println("What is your rank, click 1 - for a regular employee; 2 - for a manager; 3 - For a member of the management team.");
-                typeOfWorker = scanner.nextInt();
-            } while (typeOfWorker != 1 && typeOfWorker != 2 && typeOfWorker != 3);
-            TypeWorker typeWorker;
-            if (typeOfWorker==1){ typeWorker = TypeWorker.REGULAR_WORKER;
-            }else if (typeOfWorker==2){ typeWorker = TypeWorker.DIRECTOR;
-            }else typeWorker = TypeWorker.MEMBER_IN_BOARD;
-            Workers newWorker = new Workers(firstName, lastName, userName, password, typeWorker);
-            this.workers.add(newWorker);
-        }
+        }else{
+        do {
+            System.out.println("What is your rank, click 1 - for a regular employee; 2 - for a manager; 3 - For a member of the management team.");
+            typeOfWorker = scanner.nextInt();
+        } while (typeOfWorker != 1 && typeOfWorker != 2 && typeOfWorker != 3);
+        TypeWorker typeWorker;
+        if (typeOfWorker == 1) {
+            typeWorker = TypeWorker.REGULAR_WORKER;
+        } else if (typeOfWorker == 2) {
+            typeWorker = TypeWorker.DIRECTOR;
+        } else typeWorker = TypeWorker.MEMBER_IN_BOARD;
+        Workers newWorker = new Workers(firstName, lastName, userName, password, clubMembers,typeWorker);
+        this.workers.add(newWorker);
+    }
     }
 
 
@@ -213,7 +215,7 @@ public class Shop {
                             }
                             break;
                         case 7:
-                            ShoppingCart.buyProductsForWorker(productsHashMap, currentWorker.getTypeWorker());
+                            ShoppingCart.buyProductsForWorker(productsHashMap, currentWorker);
                             break;
                         case 8:
                             exit = true;
