@@ -187,6 +187,7 @@ public class Shop {
                             String description;
                             float price;
                             int discountPercentage;
+                            int amountProduct;
                             System.out.println("Enter name of product");
                             name = scanner.next();
                             System.out.println("Enter describe product");
@@ -195,7 +196,11 @@ public class Shop {
                             price = scanner.nextFloat();
                             System.out.println("Enter a discount for club members");
                             discountPercentage = scanner.nextInt();
-                            Products newProduct = new Products(name, description, price, discountPercentage);
+                            do {
+                                System.out.println("Enter a amount of product");
+                                amountProduct = scanner.nextInt();
+                            }while (amountProduct<0);
+                            Products newProduct = new Products(name, description, price, discountPercentage,amountProduct);
                             int i = 0;
                             do {
                                 i++;

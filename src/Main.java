@@ -17,7 +17,7 @@ public class Main {
                 case 2:
                     int choice;
                     do{
-                        System.out.println("Do you want to create an employee or customer account? for customer press 0 for employee press 1");
+                        System.out.println("Do you want to login an employee or customer account? for customer press 0 for employee press 1");
                         choice = scanner.nextInt();
                     }while(choice != 0 && choice != 1);
                     if (choice == 0) shop.loginCustomers();
@@ -25,6 +25,7 @@ public class Main {
                     break;
                 case 3:
                     exitFromSystem = false;
+                    System.out.println("BY");
                     break;
                 default:
                     System.out.println("Enter number between 1-3");
